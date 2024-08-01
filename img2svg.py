@@ -17,8 +17,11 @@ def convert_single_file(image_file, svg_file):
     # Threshold the image
     _, thresh = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
 
-    # Create a bitmap from the array
-    bmp = potrace.Bitmap(thresh)
+    # Convert the thresholded image to a binary array
+    binary_array = np.where(thresh > 0, 1, 0).astype(np.uint8)
+
+    # Create a bitmap from the binary array
+    bmp = potrace.Bitmap(binary_array)
 
     # Trace the bitmap to a path
     path = bmp.trace()
