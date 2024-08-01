@@ -29,12 +29,12 @@ def convert_single_file(image_file, svg_file):
     # Create an SVG drawing
     dwg = svgwrite.Drawing(svg_file, profile='tiny')
     for curve in path:
-        svg_path = dwg.path(d="M {} {}".format(curve.start_point[0], curve.start_point[1]), fill="black")
+        svg_path = dwg.path(d=f"M {curve.start_point[0]} {curve.start_point[1]}", fill="black")
         for segment in curve:
             if segment.is_corner:
-                svg_path.push("L {} {}".format(segment.c[0], segment.c[1]))
+                svg_path.push(f"L {segment.c[0]} {segment.c[1]}")
             else:
-                svg_path.push("C {} {} {} {}".format(segment.c1[0], segment.c1[1], segment.c2[0], segment.c2[1], segment.end_point[0], segment.end_point[1]))
+                svg_path.push(f"C {segment.c1[0]} {segment.c1[1]} {segment.c2[0]} {segment.c2[1]} {segment.end_point[0]} {segment.end_point[1]}")
         dwg.add(svg_path)
 
     # Save the SVG file
